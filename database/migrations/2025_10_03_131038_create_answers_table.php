@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('question_id'); // relasi ke pertanyaan
+            $table->string('answer_text'); // isi jawaban
+            $table->boolean('is_correct')->default(false); // jawaban benar / salah
             $table->timestamps();
+
+             // foreign key ke questions
+             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
         });
     }
 

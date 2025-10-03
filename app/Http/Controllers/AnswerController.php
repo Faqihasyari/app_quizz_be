@@ -7,59 +7,46 @@ use Illuminate\Http\Request;
 
 class AnswerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // GET /api/answers
     public function index()
     {
-        //
+        return response()->json(Answer::with('question')->get());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    // POST /api/answers
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'question_id' => 'required|exists:questions,id',
+            'answer_text' => 'required|string',
+            'is_correct' => 'required|boolean',
+        ]);
+
+        $answer = Answer::create($request->all());
+
+        return response()->json($answer, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Answer $answer)
+    // GET /api/answers/{id}
+    public function show($id)
     {
-        //
+        $answer = Answer::with('question')->findOrFail($id);
+        return response()->json($answer);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Answer $answer)
+    // PUT /api/answers/{id}
+    public function update(Request $request, $id)
     {
-        //
+        $answer = Answer::findOrFail($id);
+        $answer->update($request->all());
+
+        return response()->json($answer);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Answer $answer)
+    // DELETE /api/answers/{id}
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Answer $answer)
-    {
-        //
+        Answer::findOrFail($id)->delete();
+        return response()->json(['message' => 'Answer deleted successfully']);
     }
 }
