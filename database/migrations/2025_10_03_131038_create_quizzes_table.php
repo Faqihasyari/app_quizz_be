@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
+            $table->string('title'); // judul kuis
+            $table->text('description')->nullable(); // deskripsi kuis
+            $table->unsignedBigInteger('created_by'); // user (admin) yang bikin
             $table->timestamps();
+
+            // foreign key ke tabel users
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

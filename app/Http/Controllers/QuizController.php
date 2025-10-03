@@ -7,59 +7,46 @@ use Illuminate\Http\Request;
 
 class QuizController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // GET /api/quizzes
     public function index()
     {
-        //
+        return response()->json(Quiz::with('user')->get());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    // POST /api/quizzes
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string',
+            'description' => 'nullable|string',
+            'created_by' => 'required|exists:users,id',
+        ]);
+
+        $quiz = Quiz::create($request->all());
+
+        return response()->json($quiz, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Quiz $quiz)
+    // GET /api/quizzes/{id}
+    public function show($id)
     {
-        //
+        $quiz = Quiz::with('questions')->findOrFail($id);
+        return response()->json($quiz);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Quiz $quiz)
+    // PUT /api/quizzes/{id}
+    public function update(Request $request, $id)
     {
-        //
+        $quiz = Quiz::findOrFail($id);
+        $quiz->update($request->all());
+
+        return response()->json($quiz);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Quiz $quiz)
+    // DELETE /api/quizzes/{id}
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Quiz $quiz)
-    {
-        //
+        Quiz::findOrFail($id)->delete();
+        return response()->json(['message' => 'Quiz deleted successfully']);
     }
 }
