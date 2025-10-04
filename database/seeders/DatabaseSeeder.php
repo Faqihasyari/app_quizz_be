@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CategorySeeder::class,
             QuestionSeeder::class,
+            AnswerSeeder::class, // ✅ tambahkan ini
         ]);
     }
 }
