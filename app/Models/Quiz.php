@@ -16,6 +16,11 @@ class Quiz extends Model
         'created_by',
     ];
 
+    public function category()
+{
+    return $this->belongsTo(Category::class);
+}
+
     // Relasi ke User (pembuat kuis)
     public function user()
     {

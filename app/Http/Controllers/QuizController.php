@@ -10,7 +10,7 @@ class QuizController extends Controller
     // GET /api/quizzes
     public function index()
     {
-        return response()->json(Quiz::with('user')->get());
+        return Quiz::with(['category', 'questions.answers'])->get();
     }
 
     // POST /api/quizzes

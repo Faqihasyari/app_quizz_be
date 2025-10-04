@@ -11,17 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('quizzes', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description')->nullable();
-
-            // relasi ke category
-            $table->foreignId('category_id')
-                ->nullable()
-                ->constrained('categories')
-                ->onDelete('set null');
-
+            $table->string('name');
+            $table->string('icon')->nullable(); // opsional, kalau mau tampilkan icon di Flutter
             $table->timestamps();
         });
     }
@@ -31,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('quizzes');
+        Schema::dropIfExists('categories');
     }
 };
