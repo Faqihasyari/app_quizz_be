@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnswerController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserAnswerController;
@@ -14,3 +15,8 @@ Route::apiResource('answers', AnswerController::class);
 Route::apiResource('user-answers', UserAnswerController::class);
 Route::apiResource('user-scores', UserScoreController::class);
 Route::get('/users/{id}/profile', [UserController::class, 'profile']);
+
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
