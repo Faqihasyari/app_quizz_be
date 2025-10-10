@@ -11,7 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use  HasApiTokens ,HasFactory, Notifiable;
+    use  HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +23,29 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+
+    /**
+     * Fungsi untuk update peringkat user berdasarkan jumlah jawaban benar.
+     */
+    public function updateRank()
+    {
+        $correctAnswers = $this->correct_answers_count ?? 0;
+
+        if ($correctAnswers < 5) {
+            $this->rank = 'Beginner';
+        } elseif ($correctAnswers < 10) {
+            $this->rank = 'Intermediate';
+        } elseif ($correctAnswers < 20) {
+            $this->rank = 'Advanced';
+        } elseif ($correctAnswers < 50) {
+            $this->rank = 'Expert';
+        } else {
+            $this->rank = 'Master';
+        }
+
+        $this->save();
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.

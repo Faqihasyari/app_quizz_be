@@ -49,11 +49,20 @@ class AuthController extends Controller
             ]);
         }
 
+        // Hapus token lama biar gak numpuk
+        $user->tokens()->delete();
+
+        // Buat token baru
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
             'message' => 'Login success',
-            'user' => $user,
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'rank' => $user->rank ?? 'Beginner',
+            ],
             'token' => $token,
         ]);
     }

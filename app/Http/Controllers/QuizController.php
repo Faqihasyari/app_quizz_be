@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Quiz;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
 {
@@ -12,6 +13,30 @@ class QuizController extends Controller
     {
         return Quiz::with(['category', 'questions.answers'])->get();
     }
+
+    public function submitAnswer(Request $request)
+    {
+         /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        // Misal kamu sudah punya logic menghitung benar/salah
+        $isCorrect = $request->input('is_correct'); // true / false
+
+        if ($isCorrect) {
+            $user->correct_answers_count = $user->correct_answers_count + 1;
+            $user->save();
+        }
+
+        // 🔹 Update rank setiap kali user menjawab benar
+        $user->updateRank();
+
+        return response()->json([
+            'message' => 'Jawaban tersimpan!',
+            'rank' => $user->rank,
+            'correct_answers_count' => $user->correct_answers_count,
+        ]);
+    }
+
 
     // POST /api/quizzes
     public function store(Request $request)
