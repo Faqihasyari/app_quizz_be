@@ -9,14 +9,26 @@ use Illuminate\Support\Facades\Auth;
 class QuizController extends Controller
 {
     // GET /api/quizzes
-    public function index()
+    public function index(Request $request)
     {
-        return Quiz::with(['category', 'questions.answers'])->get();
+        $categoryName = $request->query('category'); // ambil parameter dari URL (?category=Fashion)
+
+        $query = Quiz::with(['category', 'questions.answers']);
+
+        if ($categoryName) {
+            // Filter berdasarkan nama kategori
+            $query->whereHas('category', function ($q) use ($categoryName) {
+                $q->where('name', $categoryName);
+            });
+        }
+
+        return $query->get();
     }
+
 
     public function submitAnswer(Request $request)
     {
-         /** @var \App\Models\User $user */
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         // Misal kamu sudah punya logic menghitung benar/salah
