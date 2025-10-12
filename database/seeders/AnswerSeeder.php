@@ -76,6 +76,7 @@ class AnswerSeeder extends Seeder
                     ['Bima Sakti', false],
                 ],
 
+
                 // =================== FILM ===================
                 'Film apa yang memenangkan Oscar 2023 untuk Best Picture?' => [
                     ['Oppenheimer', false],
@@ -386,6 +387,131 @@ class AnswerSeeder extends Seeder
                     ['Gedung Sumpah Pemuda', false],
                 ],
 
+                // =================== GEOGRAPHY ===================
+                'Apa ibu kota dari Jepang?' => [
+                    ['Tokyo', true],
+                    ['Kyoto', false],
+                    ['Osaka', false],
+                    ['Nagoya', false],
+                ],
+                'Benua terbesar di dunia adalah?' => [
+                    ['Asia', true],
+                    ['Afrika', false],
+                    ['Eropa', false],
+                    ['Amerika Selatan', false],
+                ],
+                'Gunung tertinggi di dunia adalah?' => [
+                    ['Gunung Everest', true],
+                    ['Gunung Kilimanjaro', false],
+                    ['Gunung Elbrus', false],
+                    ['Gunung Fuji', false],
+                ],
+                'Negara dengan jumlah pulau terbanyak?' => [
+                    ['Indonesia', true],
+                    ['Filipina', false],
+                    ['Maladewa', false],
+                    ['Jepang', false],
+                ],
+                'Sungai terpanjang di dunia?' => [
+                    ['Sungai Nil', true],
+                    ['Sungai Amazon', false],
+                    ['Sungai Mississippi', false],
+                    ['Sungai Yangtze', false],
+                ],
+                'Danau terbesar di dunia?' => [
+                    ['Laut Kaspia', true],
+                    ['Danau Superior', false],
+                    ['Danau Victoria', false],
+                    ['Danau Baikal', false],
+                ],
+                'Negara terkecil di dunia?' => [
+                    ['Vatikan', true],
+                    ['Monako', false],
+                    ['San Marino', false],
+                    ['Liechtenstein', false],
+                ],
+                'Benua dengan jumlah negara terbanyak?' => [
+                    ['Afrika', true],
+                    ['Asia', false],
+                    ['Eropa', false],
+                    ['Amerika Utara', false],
+                ],
+                'Pegunungan Andes terletak di benua?' => [
+                    ['Amerika Selatan', true],
+                    ['Asia', false],
+                    ['Eropa', false],
+                    ['Afrika', false],
+                ],
+                'Kota yang dikenal sebagai City of Love?' => [
+                    ['Paris', true],
+                    ['Roma', false],
+                    ['London', false],
+                    ['New York', false],
+                ],
+
+                // =================== TECHNOLOGY ===================
+                'Siapa pendiri Microsoft?' => [
+                    ['Bill Gates', true],
+                    ['Steve Jobs', false],
+                    ['Mark Zuckerberg', false],
+                    ['Elon Musk', false],
+                ],
+                'Bahasa pemrograman yang digunakan untuk web frontend?' => [
+                    ['JavaScript', true],
+                    ['Python', false],
+                    ['C++', false],
+                    ['PHP', false],
+                ],
+                'Apa kepanjangan dari CPU?' => [
+                    ['Central Processing Unit', true],
+                    ['Central Programming Unit', false],
+                    ['Computer Power Unit', false],
+                    ['Control Processing Unit', false],
+                ],
+                'Perusahaan pembuat iPhone?' => [
+                    ['Apple', true],
+                    ['Samsung', false],
+                    ['Huawei', false],
+                    ['Xiaomi', false],
+                ],
+                'Sistem operasi open-source terkenal?' => [
+                    ['Linux', true],
+                    ['Windows', false],
+                    ['macOS', false],
+                    ['Android', false],
+                ],
+                'Bahasa pemrograman yang dibuat oleh Guido van Rossum?' => [
+                    ['Python', true],
+                    ['Java', false],
+                    ['C#', false],
+                    ['Ruby', false],
+                ],
+                'Kepanjangan dari URL?' => [
+                    ['Uniform Resource Locator', true],
+                    ['Universal Resource Locator', false],
+                    ['Unified Routing Link', false],
+                    ['Uniform Routing Layer', false],
+                ],
+                'Teknologi jaringan generasi kelima disebut?' => [
+                    ['5G', true],
+                    ['4G', false],
+                    ['LTE', false],
+                    ['Wi-Fi 6', false],
+                ],
+                'Protokol untuk mengirim email disebut?' => [
+                    ['SMTP', true],
+                    ['HTTP', false],
+                    ['FTP', false],
+                    ['IMAP', false],
+                ],
+                'Nama AI buatan OpenAI?' => [
+                    ['ChatGPT', true],
+                    ['Bard', false],
+                    ['Claude', false],
+                    ['Gemini', false],
+                ],
+
+                
 
                 default => [],
             };

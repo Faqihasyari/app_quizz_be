@@ -16,7 +16,7 @@ class CategorySeeder extends Seeder
     {
         //
         $categories = [
-            'Olahraga', 'Film', 'Musik', 'Fashion', 'Science', 'Sejarah'
+            'Olahraga', 'Film', 'Musik', 'Fashion', 'Science', 'Sejarah', 'Geography', 'Technology'
         ];
 
         foreach ($categories as $name) {

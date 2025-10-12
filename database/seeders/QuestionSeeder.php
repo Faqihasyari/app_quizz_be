@@ -87,6 +87,33 @@ class QuestionSeeder extends Seeder
                     'Apa nama naskah proklamasi kemerdekaan Indonesia?',
                     'Dimana teks proklamasi diketik?',
                 ],
+                // =================== GEOGRAFI ===================
+                'Quiz Geography' => [
+                    'Apa ibu kota dari Jepang?',
+                    'Benua terbesar di dunia adalah?',
+                    'Gunung tertinggi di dunia adalah?',
+                    'Negara dengan jumlah pulau terbanyak di dunia?',
+                    'Sungai terpanjang di dunia?',
+                    'Danau terbesar di dunia?',
+                    'Negara terkecil di dunia?',
+                    'Benua dengan jumlah negara terbanyak?',
+                    'Pegunungan Andes terletak di benua apa?',
+                    'Kota yang dikenal sebagai Kota Cinta?',
+                ],
+
+                // =================== TEKNOLOGI ===================
+                'Quiz Technology' => [
+                    'Siapa pendiri Microsoft?',
+                    'Bahasa pemrograman apa yang digunakan untuk pengembangan web frontend?',
+                    'Apa kepanjangan dari CPU?',
+                    'Perusahaan mana yang membuat iPhone?',
+                    'Sistem operasi open-source terkenal apa?',
+                    'Bahasa pemrograman yang dibuat oleh Guido van Rossum adalah?',
+                    'Kepanjangan dari URL adalah?',
+                    'Teknologi jaringan generasi kelima disebut?',
+                    'Protokol yang digunakan untuk mengirim email adalah?',
+                    'Nama AI buatan OpenAI adalah?',
+                ],
                 default => [],
             };
 
