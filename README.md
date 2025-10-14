@@ -14,3 +14,18 @@ It provides RESTful endpoints for quizzes, questions, answers, user authenticati
 - 📂 Organized Eloquent relationships (Quiz → Category → Questions → Answers)
 
 ---
+
+## 🛠️ Tech Stack
+- **Laravel 12**
+- **PHP 8.1+**
+- **MySQL / MariaDB**
+- **Laravel Sanctum** (for API authentication)
+
+---
+
+## 📦 Installation
+
+### 1️⃣ Clone this repository
+```bash
+git clone https://github.com/yourusername/quiz-backend.git
+cd quiz-backend
