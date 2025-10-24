@@ -27,27 +27,44 @@ class QuizController extends Controller
 
 
     public function submitAnswer(Request $request)
-    {
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
+{
 
-        // Misal kamu sudah punya logic menghitung benar/salah
-        $isCorrect = $request->input('is_correct'); // true / false
+    /** @var \App\Models\User $user */
+    $user = Auth::user();
 
-        if ($isCorrect) {
-            $user->correct_answers_count = $user->correct_answers_count + 1;
-            $user->save();
-        }
+    $quizId = $request->input('quiz_id');
+    $correctCount = $request->input('correct_count');
+    $totalQuestions = $request->input('total_questions');
 
-        // 🔹 Update rank setiap kali user menjawab benar
-        $user->updateRank();
+    // Hitung presentase benar
+    $percentage = $correctCount / $totalQuestions;
 
-        return response()->json([
-            'message' => 'Jawaban tersimpan!',
-            'rank' => $user->rank,
-            'correct_answers_count' => $user->correct_answers_count,
-        ]);
+    // Tentukan point berdasarkan hasil benar
+    if ($correctCount == $totalQuestions) {
+        $pointsEarned = 1000;
+    } elseif ($correctCount >= 5) {
+        $pointsEarned = 500;
+    } elseif ($correctCount >= 3) {
+        $pointsEarned = 300;
+    } else {
+        $pointsEarned = 0;
     }
+
+    // Tambahkan ke total poin user
+    $user->points += $pointsEarned;
+    $user->correct_answers_count += $correctCount;
+    $user->updateRank(); // Tetap update rank
+    $user->save();
+
+    return response()->json([
+        'message' => 'Quiz selesai!',
+        'points_earned' => $pointsEarned,
+        'total_points' => $user->points,
+        'rank' => $user->rank,
+        'correct_answers_count' => $user->correct_answers_count
+    ]);
+}
+
 
 
     // POST /api/quizzes
