@@ -12,17 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('quizzes', function (Blueprint $table) {
-            //
+            $table->integer('max_points')->default(1000)->after('title');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('quizzes', function (Blueprint $table) {
-            //
+            $table->dropColumn('max_points');
         });
     }
 };

@@ -13,7 +13,7 @@ class Quiz extends Model
     protected $fillable = [
         'title',
         'description',
-        'created_by',
+        'max_points',
     ];
 
     public function category()
