@@ -11,20 +11,22 @@ class QuizController extends Controller
 {
     // GET /api/quizzes
     public function index(Request $request)
-    {
-        $categoryName = $request->query('category'); // ambil parameter dari URL (?category=Fashion)
+{
+    $categoryName = $request->query('category'); // ?category=Fashion
 
-        $query = Quiz::with(['category', 'questions.answers']);
+    $query = Quiz::with(['category', 'questions.answers'])
+        ->select('id', 'title', 'description', 'category_id', 'max_points'); // ✅ tambahkan ini
 
-        if ($categoryName) {
-            // Filter berdasarkan nama kategori
-            $query->whereHas('category', function ($q) use ($categoryName) {
-                $q->where('name', $categoryName);
-            });
-        }
-
-        return $query->get();
+    if ($categoryName) {
+        // Filter berdasarkan nama kategori
+        $query->whereHas('category', function ($q) use ($categoryName) {
+            $q->where('name', $categoryName);
+        });
     }
+
+    return $query->get();
+}
+
 
 
     public function submitAnswer(Request $request)
