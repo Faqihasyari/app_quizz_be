@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Quiz;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class QuizController extends Controller
 {
@@ -28,7 +29,6 @@ class QuizController extends Controller
 
     public function submitAnswer(Request $request)
 {
-
     /** @var \App\Models\User $user */
     $user = Auth::user();
 
@@ -36,34 +36,40 @@ class QuizController extends Controller
     $correctCount = $request->input('correct_count');
     $totalQuestions = $request->input('total_questions');
 
-    // Hitung presentase benar
-    $percentage = $correctCount / $totalQuestions;
+    // Ambil quiz yang dikerjakan
+    $quiz = Quiz::findOrFail($quizId);
 
-    // Tentukan point berdasarkan hasil benar
-    if ($correctCount == $totalQuestions) {
-        $pointsEarned = 1000;
-    } elseif ($correctCount >= 5) {
-        $pointsEarned = 500;
-    } elseif ($correctCount >= 3) {
-        $pointsEarned = 300;
-    } else {
-        $pointsEarned = 0;
-    }
+    // Ambil total poin maksimum dari quiz
+    $maxPoints = $quiz->max_points;
 
-    // Tambahkan ke total poin user
+    // Hitung point proporsional berdasarkan jumlah benar
+    $pointsEarned = intval(($correctCount / $totalQuestions) * $maxPoints);
+
+    // Update data user
     $user->points += $pointsEarned;
     $user->correct_answers_count += $correctCount;
-    $user->updateRank(); // Tetap update rank
+    $user->updateRank();
     $user->save();
+
+    // (Opsional) simpan riwayat di user_scores
+    DB::table('user_scores')->insert([
+        'user_id' => $user->id,
+        'quiz_id' => $quizId,
+        'correct_count' => $correctCount,
+        'points_earned' => $pointsEarned,
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]);
 
     return response()->json([
         'message' => 'Quiz selesai!',
         'points_earned' => $pointsEarned,
         'total_points' => $user->points,
         'rank' => $user->rank,
-        'correct_answers_count' => $user->correct_answers_count
+        'quiz_max_points' => $maxPoints
     ]);
 }
+
 
 
 
