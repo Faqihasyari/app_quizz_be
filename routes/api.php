@@ -25,3 +25,5 @@ Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logo
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/quizzes/submit', [QuizController::class, 'submitAnswer']);
 });
+
+Route::middleware('auth:sanctum')->get('/daily-task', [DailyTaskController::class, 'showToday']);

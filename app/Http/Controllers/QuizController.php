@@ -29,7 +29,7 @@ class QuizController extends Controller
 
 
 
-    public function submitAnswer(Request $request)
+public function submitAnswer(Request $request)
 {
     /** @var \App\Models\User $user */
     $user = Auth::user();
@@ -38,22 +38,25 @@ class QuizController extends Controller
     $correctCount = $request->input('correct_count');
     $totalQuestions = $request->input('total_questions');
 
+    // 🧩 Validasi input
+    if (!$quizId || !$correctCount || !$totalQuestions) {
+        return response()->json(['message' => 'Data tidak lengkap.'], 400);
+    }
+
     // Ambil quiz yang dikerjakan
     $quiz = Quiz::findOrFail($quizId);
 
-    // Ambil total poin maksimum dari quiz
-    $maxPoints = $quiz->max_points;
-
     // Hitung point proporsional berdasarkan jumlah benar
+    $maxPoints = $quiz->max_points;
     $pointsEarned = intval(($correctCount / $totalQuestions) * $maxPoints);
 
-    // Update data user
+    // 🧩 Update poin & rank user
     $user->points += $pointsEarned;
     $user->correct_answers_count += $correctCount;
     $user->updateRank();
     $user->save();
 
-    // (Opsional) simpan riwayat di user_scores
+    // Simpan riwayat skor di tabel user_scores
     DB::table('user_scores')->insert([
         'user_id' => $user->id,
         'quiz_id' => $quizId,
@@ -63,14 +66,52 @@ class QuizController extends Controller
         'updated_at' => now(),
     ]);
 
+    // 🟢 Tambahkan logika Daily Task
+    $today = now()->toDateString();
+    $target = 14; // jumlah soal yang harus dijawab per hari
+    $reward = 1000; // bonus poin tambahan jika daily task selesai
+
+    $userTask = \App\Models\UserDailyTask::firstOrCreate(
+        [
+            'user_id' => $user->id,
+            'date' => $today,
+        ],
+        [
+            'progress' => 0,
+            'is_completed' => false,
+        ]
+    );
+
+    // Naikkan progress berdasarkan jumlah soal yang baru dijawab
+    if (!$userTask->is_completed) {
+        $userTask->progress += $totalQuestions; // kamu bisa ubah ke $correctCount kalau ingin hanya jawaban benar yang dihitung
+
+        // Jika progress sudah mencapai target
+        if ($userTask->progress >= $target) {
+            $userTask->is_completed = true;
+
+            // Beri bonus poin sekali saja
+            $user->points += $reward;
+            $user->save();
+        }
+
+        $userTask->save();
+    }
+
     return response()->json([
         'message' => 'Quiz selesai!',
         'points_earned' => $pointsEarned,
         'total_points' => $user->points,
         'rank' => $user->rank,
-        'quiz_max_points' => $maxPoints
+        'quiz_max_points' => $maxPoints,
+        'daily_task' => [
+            'progress' => $userTask->progress,
+            'target' => $target,
+            'is_completed' => $userTask->is_completed,
+        ],
     ]);
 }
+
 
 
 
