@@ -13,8 +13,14 @@ return new class extends Migration
     {
         Schema::create('user_daily_tasks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('daily_task_id')->constrained()->onDelete('cascade');
+            $table->integer('progress')->default(0);
+            $table->boolean('is_completed')->default(false);
+            $table->date('date')->index();
             $table->timestamps();
         });
+        
     }
 
     /**
