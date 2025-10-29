@@ -13,8 +13,13 @@ return new class extends Migration
     {
         Schema::create('daily_tasks', function (Blueprint $table) {
             $table->id();
+            $table->string('title'); // "Tugas Harian"
+            $table->string('description')->nullable(); // misal "Jawab 14 soal benar hari ini"
+            $table->integer('target')->default(14); // target harian
+            $table->integer('reward_points')->default(1000);
             $table->timestamps();
         });
+        
     }
 
     /**
