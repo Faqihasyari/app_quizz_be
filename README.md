@@ -11,6 +11,7 @@ It provides RESTful endpoints for quizzes, questions, answers, user authenticati
 - 📝 Questions and multiple-choice answers
 - 🎯 Daily task progress (Target harian user)
 - ✅ Submit and validate answers
+- 📊 Leaderboard system
 - 🏆 User ranking system based on correct answers
 - 📂 Organized Eloquent relationships (Quiz → Category → Questions → Answers)
 
