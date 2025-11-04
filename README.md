@@ -9,7 +9,7 @@ It provides RESTful endpoints for quizzes, questions, answers, user authenticati
 - 🔐 User authentication using Sanctum (token-based login)
 - 🧩 Dynamic quiz fetching by category
 - 📝 Questions and multiple-choice answers
-- 🎯 Daily task progress (Target harian user)
+- 🎯 Daily task progress
 - ✅ Submit and validate answers
 - 📊 Leaderboard system
 - 🏆 User ranking system based on correct answers
