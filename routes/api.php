@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DailyTaskController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserAnswerController;
